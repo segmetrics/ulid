@@ -123,11 +123,13 @@ export function detectPrng(allowInsecure: boolean = false, root?: any): PRNG {
   const browserCrypto = root && (root.crypto || root.msCrypto)
 
   if (browserCrypto) {
-    return () => {
-        const buffer = new Uint8Array(1)
-        browserCrypto.getRandomValues(buffer)
-        return buffer[0] / 0xff
-    }
+    try {
+      return () => {
+          const buffer = new Uint8Array(1)
+          browserCrypto.getRandomValues(buffer)
+          return buffer[0] / 0xff
+      }
+    } catch (e) {}
   } else {
     try {
       const nodeCrypto = require("crypto")

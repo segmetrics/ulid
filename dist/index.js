@@ -101,11 +101,13 @@ export function detectPrng(allowInsecure = false, root) {
     }
     const browserCrypto = root && (root.crypto || root.msCrypto);
     if (browserCrypto) {
+      try{
         return () => {
             const buffer = new Uint8Array(1);
             browserCrypto.getRandomValues(buffer);
             return buffer[0] / 0xff;
         };
+      } catch (e) {}
     }
     else {
         try {
