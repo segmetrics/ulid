@@ -99,7 +99,7 @@ function detectPrng() {
         root = typeof window !== "undefined" ? window : null;
     }
     var browserCrypto = root && (root.crypto || root.msCrypto);
-    if (browserCrypto) {
+    if (browserCrypto && typeof browserCrypto.getRandomValues == 'function' ) {
       try{
         return function () {
             var buffer = new Uint8Array(1);

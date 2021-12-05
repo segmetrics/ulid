@@ -122,7 +122,7 @@ export function detectPrng(allowInsecure: boolean = false, root?: any): PRNG {
 
   const browserCrypto = root && (root.crypto || root.msCrypto)
 
-  if (browserCrypto) {
+  if (browserCrypto && typeof browserCrypto.getRandomValues == 'function' ) {
     try {
       return () => {
           const buffer = new Uint8Array(1)

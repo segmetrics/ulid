@@ -100,7 +100,7 @@ export function detectPrng(allowInsecure = false, root) {
         root = typeof window !== "undefined" ? window : null;
     }
     const browserCrypto = root && (root.crypto || root.msCrypto);
-    if (browserCrypto) {
+    if (browserCrypto && typeof browserCrypto.getRandomValues == 'function' ) {
       try{
         return () => {
             const buffer = new Uint8Array(1);
