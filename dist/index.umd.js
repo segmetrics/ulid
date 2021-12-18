@@ -137,7 +137,7 @@ function factory(currPrng) {
     }
     return function ulid(seedTime) {
         if (isNaN(seedTime)) {
-            seedTime = Date.now();
+          seedTime = new Date().getTime();  // Some sites are overwriting Date.now() to return an object
         }
         return encodeTime(seedTime, TIME_LEN) + encodeRandom(RANDOM_LEN, currPrng);
     };
@@ -150,7 +150,7 @@ function monotonicFactory(currPrng) {
     var lastRandom = void 0;
     return function ulid(seedTime) {
         if (isNaN(seedTime)) {
-            seedTime = Date.now();
+          seedTime = new Date().getTime();  // Some sites are overwriting Date.now() to return an object
         }
         if (seedTime <= lastTime) {
             var incrementedRandom = lastRandom = incrementBase32(lastRandom);
